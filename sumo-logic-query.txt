@@ -1,0 +1,4 @@
+_sourceCategory=web_app_logs "/api/data"
+| where response_time > 3
+| count by _timeslice
+| where count > 5
