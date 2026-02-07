@@ -1,47 +1,38 @@
-# PacerPro – Platform Engineer Coding Test
+PacerPro – Platform Engineer Coding Test
 
-## Overview
-PacerPro demonstrates a monitoring and self-healing solution for a web application with intermittent performance issues.
+Overview
+PacerPro demonstrates a monitoring and self-healing solution for a web application experiencing intermittent performance issues.
 
-High API response times are detected via **Sumo Logic**, triggering an **AWS Lambda** function that automatically restarts an EC2 instance and sends notifications through **SNS**. Infrastructure is provisioned using **Terraform**.
+High API response times are detected using Sumo Logic, which triggers an AWS Lambda function to automatically restart an EC2 instance and send notifications via SNS. The entire infrastructure is defined and managed using Terraform.
 
-## Architecture
+Architecture
 
-Diagram of workflow:
+High-level workflow:
+Sumo Logic → Alert → AWS Lambda → EC2 Restart → SNS Notification
 
-+----------------+      Alert       +----------------+
-|  Sumo Logic    | ---------------->|  AWS Lambda    |
-|  Monitors API  |                  |  Remediation   |
-+----------------+                  +----------------+
-        |                                   |
-        |                                   |
-        v                                   v
-+----------------+                  +----------------+
-|   EC2 Instance |                  |      SNS       |
-|  (Web App)     |                  | Notifications  |
-+----------------+                  +----------------+
+Architecture details:
+Monitoring: Sumo Logic observes the /api/data endpoint logs
+Alerting: An alert fires when response time exceeds 3 seconds for more than 5 events within 10 minutes
+Remediation: AWS Lambda restarts the EC2 instance and logs actions to CloudWatch
+Notifications: SNS sends alerts to stakeholders
+Infrastructure as Code: Terraform provisions EC2, Lambda, SNS, and IAM roles
 
-- **Monitoring:** Sumo Logic observes `/api/data` endpoint logs  
-- **Alerting:** Fires when response time > 3s for 5+ events in 10 minutes  
-- **Remediation:** Lambda restarts EC2 and logs actions to CloudWatch  
-- **Notifications:** SNS sends alerts to stakeholders  
-- **Infrastructure as Code:** Terraform provisions EC2, Lambda, SNS, and IAM roles  
+Key Features
+Automatic detection and remediation of slow API responses
+Self-healing infrastructure using AWS Lambda
+Secure IAM roles following the principle of least privilege
+Infrastructure fully managed with Terraform
+Logging and notifications for operational visibility
 
-## Key Features
-- Automatic detection and remediation of slow API responses  
-- Secure, least-privilege IAM roles  
-- Fully automated provisioning with Terraform  
-- Logs actions and notifies via SNS  
+Assumptions
+Application logs are structured in JSON format
+Placeholder AWS resource identifiers are used
+In a production environment, Terraform would provision real AWS resources
+Sumo Logic triggers AWS Lambda via webhook integration
 
-## Assumptions
-- Logs are in **JSON format**  
-- Placeholder AWS resource IDs are used  
-- In production, Terraform would provision actual AWS resources  
-- Sumo Logic triggers Lambda via **webhook integration**
+Security Considerations
+IAM roles follow the principle of least privilege
+No credentials or secrets are hardcoded
 
-## Security Considerations
-- IAM roles follow **least-privilege principle**  
-- No hardcoded credentials or secrets  
-
-## Screen Recordings
-Screen and audio recordings are provided separately as part of the submission.
+Screen Recordings
+Screen and audio recordings demonstrating the monitoring, alerting, and remediation workflow are provided separately as part of the submission.
