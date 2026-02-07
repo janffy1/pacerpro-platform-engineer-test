@@ -36,3 +36,4 @@ No credentials or secrets are hardcoded
 
 Screen Recordings
 Screen and audio recordings demonstrating the monitoring, alerting, and remediation workflow are provided separately as part of the submission.
+
