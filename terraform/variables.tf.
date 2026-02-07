@@ -1,0 +1,11 @@
+# Variables for PacerPro Terraform demo
+
+variable "ec2_instance_type" {
+  description = "EC2 instance type"
+  default     = "t2.micro"  # placeholder value
+}
+
+variable "sns_topic_name" {
+  description = "SNS topic name"
+  default     = "PacerProAlertTopic"  # placeholder value
+}
